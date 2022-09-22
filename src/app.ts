@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const AddNewTaskContainer = styled.div`
+export const AppContainer = styled.div`
   max-width: 736px;
   margin: -1.75rem auto 0;
   display: flex;

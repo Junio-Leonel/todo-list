@@ -1,59 +1,54 @@
-import { Trash } from "phosphor-react";
+import * as Checkbox from "@radix-ui/react-checkbox";
+
+import { Check, Trash } from "phosphor-react";
+
+import { Task } from "../../interfaces/Task";
+
 import { AmountTaskCompleted } from "../AmountTasksCompleted";
+
 import {
   ItemContent,
-  ItemContentCompleted,
   TaskContent,
-  TaskContentCompleted,
   TaskListContainer,
   TasksContainer,
 } from "./styles";
 
-export function Tasks() {
+interface TasksProps {
+  tasks: Task[];
+  onDeleteTask: (task: string) => void;
+  onUpdateTask: (task: Task) => void;
+}
+
+export function Tasks({ tasks, onDeleteTask, onUpdateTask }: TasksProps) {
   return (
     <TasksContainer>
       <AmountTaskCompleted />
 
       <TaskListContainer>
-        <TaskContent>
-          <ItemContent>
-            <input type="checkbox" />
-            <p>Tomar café da manhã</p>
-          </ItemContent>
-          <button>
-            <Trash size={18} />
-          </button>
-        </TaskContent>
+        {tasks.map((task) => {
+          return (
+            <TaskContent key={task.id} check={task.completed}>
+              <ItemContent check={task.completed}>
+                <Checkbox.Root
+                  className="checkBox"
+                  checked={task.completed}
+                  onCheckedChange={(checked) =>
+                    onUpdateTask({ ...task, completed: checked as boolean })
+                  }
+                >
+                  <Checkbox.Indicator className="check">
+                    <Check />
+                  </Checkbox.Indicator>
+                </Checkbox.Root>
+                <p>{task.description}</p>
+              </ItemContent>
 
-        <TaskContent>
-          <ItemContent>
-            <input type="checkbox" />
-            <p>Tomar banho as 7:00</p>
-          </ItemContent>
-          <button>
-            <Trash size={18} />
-          </button>
-        </TaskContent>
-
-        <TaskContentCompleted>
-          <ItemContentCompleted>
-            <input type="checkbox" checked={true} />
-            <p>Estudar React e JavaScript</p>
-          </ItemContentCompleted>
-          <button>
-            <Trash size={18} />
-          </button>
-        </TaskContentCompleted>
-
-        <TaskContentCompleted>
-          <ItemContentCompleted>
-            <input type="checkbox" checked={true} />
-            <p>Trabalhar as 17:00 e chegar em casa as 05:00</p>
-          </ItemContentCompleted>
-          <button>
-            <Trash size={18} />
-          </button>
-        </TaskContentCompleted>
+              <button onClick={() => onDeleteTask(task.id)}>
+                <Trash size={18} />
+              </button>
+            </TaskContent>
+          );
+        })}
       </TaskListContainer>
     </TasksContainer>
   );
