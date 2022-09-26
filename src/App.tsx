@@ -14,6 +14,8 @@ import { Task } from "./interfaces/Task";
 import { AppContainer } from "./app";
 
 import { GlobalStyle } from "./styles/global";
+import { Clipboard } from "./components/Clipboard";
+import { TaskAmount } from "./components/TaskAmount";
 
 export function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -38,9 +40,11 @@ export function App() {
     );
   }
 
-  function deleteTask(taskToDelete: string) {
-    setTasks(tasks.filter((task) => task.id !== taskToDelete));
+  function handleOnDeleteTask(taskId: string) {
+    setTasks(tasks.filter((task) => task.id !== taskId));
   }
+
+  const isInputEmpty = newTask.length === 0;
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -54,17 +58,27 @@ export function App() {
           onChange={(event) => setNewTask(event.target.value)}
           value={newTask}
         />
-        <button type="button" onClick={handleAddNewTask}>
+        <button
+          type="button"
+          onClick={handleAddNewTask}
+          disabled={isInputEmpty}
+        >
           Criar
           <PlusCircle size={18} />
         </button>
       </AppContainer>
 
-      <Tasks
-        tasks={tasks}
-        onDeleteTask={deleteTask}
-        onUpdateTask={handleOnUpdateTask}
-      />
+      <TaskAmount tasks={tasks} />
+
+      {tasks.length === 0 ? (
+        <Clipboard />
+      ) : (
+        <Tasks
+          tasks={tasks}
+          onDeleteTask={handleOnDeleteTask}
+          onUpdateTask={handleOnUpdateTask}
+        />
+      )}
     </ThemeProvider>
   );
 }

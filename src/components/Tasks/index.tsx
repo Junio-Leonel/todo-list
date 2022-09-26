@@ -4,8 +4,6 @@ import { Check, Trash } from "phosphor-react";
 
 import { Task } from "../../interfaces/Task";
 
-import { AmountTaskCompleted } from "../AmountTasksCompleted";
-
 import {
   ItemContent,
   TaskContent,
@@ -15,15 +13,13 @@ import {
 
 interface TasksProps {
   tasks: Task[];
-  onDeleteTask: (task: string) => void;
+  onDeleteTask: (taskId: string) => void;
   onUpdateTask: (task: Task) => void;
 }
 
 export function Tasks({ tasks, onDeleteTask, onUpdateTask }: TasksProps) {
   return (
     <TasksContainer>
-      <AmountTaskCompleted />
-
       <TaskListContainer>
         {tasks.map((task) => {
           return (

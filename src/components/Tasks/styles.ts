@@ -15,11 +15,11 @@ export const TaskListContainer = styled.div`
   gap: 0.75rem;
 `;
 
-type Check = {
-  check: true | false;
+type Completed = {
+  check: boolean;
 };
 
-export const TaskContent = styled.div<Check>`
+export const TaskContent = styled.div<Completed>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -31,7 +31,7 @@ export const TaskContent = styled.div<Check>`
 
   background-color: ${(props) => props.theme["gray-500"]};
 
-  opacity: ${(props) => (props.check === true ? "0.6" : "1")};
+  opacity: ${(props) => (props.check === true ? "0.7" : "1")};
 
   button {
     color: ${(props) => props.theme["gray-300"]};
@@ -43,7 +43,7 @@ export const TaskContent = styled.div<Check>`
   }
 `;
 
-export const ItemContent = styled.div<Check>`
+export const ItemContent = styled.div<Completed>`
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -58,6 +58,8 @@ export const ItemContent = styled.div<Check>`
         props.check === true ? props.theme["purple-dark"] : props.theme.blue};
     background-color: ${(props) =>
       props.check === true ? props.theme["purple-dark"] : ""};
+
+    cursor: pointer;
   }
 
   .check {

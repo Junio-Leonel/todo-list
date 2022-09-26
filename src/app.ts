@@ -49,5 +49,14 @@ export const AppContainer = styled.div`
     &:hover {
       background-color: ${(props) => props.theme["blue"]};
     }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.7;
+
+      &:hover {
+        background-color: ${(props) => props.theme["blue-dark"]};
+      }
+    }
   }
 `;
