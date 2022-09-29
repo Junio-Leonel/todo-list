@@ -6,6 +6,10 @@ interface TaskAmountProps {
 }
 
 export function TaskAmount({ tasks }: TaskAmountProps) {
+  const isTaskCompleted = tasks.filter((task) => {
+    return task.completed === true;
+  });
+
   return (
     <TaskAmountContainer>
       <div>
@@ -15,7 +19,7 @@ export function TaskAmount({ tasks }: TaskAmountProps) {
 
       <div>
         <span>Concluídas</span>
-        <span>{`${tasks.length} de ${tasks.length}`}</span>
+        <span>{`${isTaskCompleted.length} de ${tasks.length}`}</span>
       </div>
     </TaskAmountContainer>
   );
